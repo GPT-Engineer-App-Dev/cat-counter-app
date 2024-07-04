@@ -13,10 +13,7 @@ export function SupabaseProvider({ children }) {
 
 const fromSupabase = async (query) => {
     const { data, error } = await query;
-    if (error) {
-        console.error(error);
-        throw new Error(error.message);
-    }
+    if (error) throw new Error(error.message);
     return data;
 };
 
@@ -38,15 +35,15 @@ const fromSupabase = async (query) => {
 
 ### specific_ports
 
-| name         | type | format | required |
-|--------------|------|--------|----------|
-| id           | int8 | number | true     |
-| name         | text | string | false    |
-| main_port_id | int8 | number | false    |
+| name        | type | format | required |
+|-------------|------|--------|----------|
+| id          | int8 | number | true     |
+| name        | text | string | false    |
+| main_port_id| int8 | number | false    |  // foreign key to main_ports
 
 */
 
-// Hooks for hubs table
+// Hooks for hubs
 export const useHubs = () => useQuery({
     queryKey: ['hubs'],
     queryFn: () => fromSupabase(supabase.from('hubs').select('*')),
@@ -87,7 +84,7 @@ export const useDeleteHub = () => {
     });
 };
 
-// Hooks for main_ports table
+// Hooks for main_ports
 export const useMainPorts = () => useQuery({
     queryKey: ['main_ports'],
     queryFn: () => fromSupabase(supabase.from('main_ports').select('*')),
@@ -128,7 +125,7 @@ export const useDeleteMainPort = () => {
     });
 };
 
-// Hooks for specific_ports table
+// Hooks for specific_ports
 export const useSpecificPorts = () => useQuery({
     queryKey: ['specific_ports'],
     queryFn: () => fromSupabase(supabase.from('specific_ports').select('*')),
