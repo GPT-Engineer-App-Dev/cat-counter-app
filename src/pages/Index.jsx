@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { Box, Button, Container, Heading, Image, Text, VStack, useToast } from "@chakra-ui/react";
-import { FaCat, FaUpload } from "react-icons/fa";
+import { FaShip, FaUpload } from "react-icons/fa";
 import { useHubs, useAddHub } from "../integrations/supabase/index.js";
 
 const Index = () => {
   const [selectedImage, setSelectedImage] = useState(null);
-  const [catCount, setCatCount] = useState(0);
   const toast = useToast();
   const { data: hubs, error: hubsError, isLoading: hubsLoading } = useHubs();
   const addHubMutation = useAddHub();
@@ -16,9 +15,6 @@ const Index = () => {
       const reader = new FileReader();
       reader.onload = (e) => {
         setSelectedImage(e.target.result);
-        // Simulate cat detection (random number between 0 and 5)
-        const detectedCats = Math.floor(Math.random() * 6);
-        setCatCount(detectedCats);
       };
       reader.readAsDataURL(file);
     }
@@ -62,7 +58,7 @@ const Index = () => {
   return (
     <Container centerContent maxW="container.md" py={10}>
       <VStack spacing={8} align="center" w="full">
-        <Heading>Cat Counter App</Heading>
+        <Heading>Port Management App</Heading>
         <Box>
           <input
             type="file"
@@ -83,18 +79,13 @@ const Index = () => {
           </Box>
         )}
         <Button
-          leftIcon={<FaCat />}
+          leftIcon={<FaShip />}
           colorScheme="green"
           onClick={handleUploadClick}
           isDisabled={!selectedImage}
         >
-          Count Cats
+          Add Hub
         </Button>
-        {catCount > 0 && (
-          <Text fontSize="2xl" fontWeight="bold">
-            Cats detected: {catCount}
-          </Text>
-        )}
         <Button
           colorScheme="teal"
           onClick={handleAddHub}
